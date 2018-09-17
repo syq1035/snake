@@ -1,9 +1,9 @@
 $(function(){
-    let WIDTH = 560;
-    let HEIGHT = 560;
-    let SNAKEWIDTH = 5;
-    let FOODWIDTH = 5;
-    let FOODNUM = 5;
+    const WIDTH = 560;
+    const HEIGHT = 560;
+    const SNAKEWIDTH = 5;
+    const FOODWIDTH = 5;
+    const FOODNUM = 5;
     
     let food_arr = [];  //食物位置坐标数组
     let snakeBody_arr = []; //蛇身位置数组
@@ -13,12 +13,13 @@ $(function(){
     let context = canvas.getContext("2d"); //获取上下文的环境
 
     init();
+
     //初始化
     function init(){
         createGrid();
         initSnake();
         createFood();
-        controlDir();
+        controlDirKey();
         controlDirMouse();
     }
     //点击开始按钮蛇就移动起来
@@ -91,9 +92,9 @@ $(function(){
             currentDirection = 38;
             init();
         }
-
     })
-        //创建画布
+
+    //创建画布
     function createGrid(){
         //设置宽高
         canvas.width = WIDTH ;
@@ -121,12 +122,12 @@ $(function(){
             let pos = position(x,y)
             food_arr.push(pos);
         }
-        //console.log(food_arr);
     }
     //坐标
     function position(x,y){
         return { x:x ,y:y }
     }
+    //判断某点是否是食物
     function includesPoint(x,y){
         for(let point of food_arr){
             if((point.x==x) && (point.y==y)){
@@ -135,16 +136,16 @@ $(function(){
         }
         return false;
     }
+    //某点在food_arr数组中的下标
     function indexofFoodArr(x,y){
         for(let point of food_arr){
             if((point.x==x) && (point.y==y)){
                 return food_arr.indexOf(point);
             }
         }
-        //return -1;
     }
     //键盘方向控制，不能向与当前方向相反的方向改变
-    function controlDir(){
+    function controlDirKey(){
         let canChangeDir = true;
         // keycode   37 = Left ,38 = Up , 39 = Right,  40 = Down
         $(document).keydown(function(e){ 
@@ -174,7 +175,6 @@ $(function(){
                 currentDirection = e.keyCode;
             }
         }); 
-    
     }
     //鼠标方向控制
     //37 = Left ,38 = Up , 39 = Right,  40 = Down
@@ -200,7 +200,6 @@ $(function(){
             }
         })
     }
-
     //结束判断
     function gameOver(){
         //边框碰撞
@@ -215,7 +214,4 @@ $(function(){
         }
         return false;
     }
-
-
-
 })
