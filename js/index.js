@@ -19,6 +19,7 @@ $(function(){
         initSnake();
         createFood();
         controlDir();
+        controlDirMouse();
     }
     //点击开始按钮蛇就移动起来
     $("#begin").click(function(){
@@ -142,7 +143,7 @@ $(function(){
         }
         //return -1;
     }
-    //方向控制，不能向与当前方向相反的方向改变
+    //键盘方向控制，不能向与当前方向相反的方向改变
     function controlDir(){
         let canChangeDir = true;
         // keycode   37 = Left ,38 = Up , 39 = Right,  40 = Down
@@ -175,6 +176,31 @@ $(function(){
         }); 
     
     }
+    //鼠标方向控制
+    //37 = Left ,38 = Up , 39 = Right,  40 = Down
+    function controlDirMouse(){
+        $("#canvas").off();
+        $("#canvas").mousedown(function(e){
+            if(e.which == 1){
+                let clickX = e.offsetX;
+                let clickY = e.offsetY;
+                if(currentDirection==38||currentDirection==40){
+                    if(clickX>snakeBody_arr[0].x){
+                        currentDirection = 39;
+                    }else{
+                        currentDirection = 37;
+                    }
+                }else if(currentDirection==37||currentDirection==39){
+                    if(clickY>snakeBody_arr[0].y){
+                        currentDirection = 40;
+                    }else{
+                        currentDirection = 38;
+                    }
+                }
+            }
+        })
+    }
+
     //结束判断
     function gameOver(){
         //边框碰撞
@@ -189,5 +215,7 @@ $(function(){
         }
         return false;
     }
+
+
 
 })
